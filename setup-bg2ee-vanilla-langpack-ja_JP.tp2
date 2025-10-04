@@ -22,29 +22,26 @@ PRINT @1 // ~dialog.tlk に日本語翻訳を適用しています...（数分�
 MKDIR ~lang~
 MKDIR ~lang/ja_JP~
 
-// Generate dialog.tlk from TRA file using WeiDU
-PRINT @7 // ~Generating Japanese dialog.tlk...~
+// Copy pre-generated TLK files
+PRINT @7 // ~Copying Japanese dialog.tlk...~
 
-AT_NOW ~weidu --make-tlk v2.6.6.0/lang/ja_JP/dialog.tra --out lang/ja_JP~
-
-// Check if dialog.tlk was created
-ACTION_IF NOT FILE_EXISTS ~lang/ja_JP/dialog.tlk~ BEGIN
-  FAIL @8 // ~Failed to generate dialog.tlk~
+// Copy pre-generated dialog.tlk for male protagonist
+ACTION_IF FILE_EXISTS ~v2.6.6.0/lang/ja_JP/dialog.tlk~ BEGIN
+  COPY ~v2.6.6.0/lang/ja_JP/dialog.tlk~ ~lang/ja_JP/dialog.tlk~
+  PRINT @2 // ~男性主人公用の翻訳を適用しました。~
+END ELSE BEGIN
+  FAIL @8 // ~dialog.tlk not found~
 END
 
-PRINT @2 // ~男性主人公用の翻訳を適用しました。~
+// Copy pre-generated dialogF.tlk for female protagonist
+PRINT @3 // ~Copying dialogF.tlk...~
 
-// Generate dialogF.tlk from TRA file
-PRINT @3 // ~dialogF.tlk に日本語翻訳を適用しています...~
-
-AT_NOW ~weidu --make-tlk v2.6.6.0/lang/ja_JP/dialogF.tra --out lang/ja_JP --ftlkout dialogF.tlk~
-
-// Check if dialogF.tlk was created
-ACTION_IF NOT FILE_EXISTS ~lang/ja_JP/dialogF.tlk~ BEGIN
-  FAIL @9 // ~Failed to generate dialogF.tlk~
+ACTION_IF FILE_EXISTS ~v2.6.6.0/lang/ja_JP/dialogF.tlk~ BEGIN
+  COPY ~v2.6.6.0/lang/ja_JP/dialogF.tlk~ ~lang/ja_JP/dialogF.tlk~
+  PRINT @5 // ~女性主人公用の翻訳を適用しました。~
+END ELSE BEGIN
+  FAIL @9 // ~dialogF.tlk not found~
 END
-
-PRINT @5 // ~女性主人公用の翻訳を適用しました。~
 
 // Copy Japanese font and configuration files to override/
 PRINT @11 // ~日本語フォントと設定ファイルをコピーしています...~
