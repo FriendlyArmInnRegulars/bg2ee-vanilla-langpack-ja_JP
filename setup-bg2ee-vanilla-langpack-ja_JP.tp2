@@ -43,14 +43,17 @@ ACTION_IF FILE_EXISTS_IN_GAME ~dialogF.tlk~ BEGIN
   // Load female protagonist translations
   LOAD_TRA ~v2.6.6.0/lang/ja_JP/dialogF.tra~
 
-  // Apply all translations to dialogF.tlk
-  OUTER_FOR (i = 0; i <= 103213; ++i) BEGIN
-    ACTION_IF VARIABLE_IS_SET $tra_strings(~%i%~) BEGIN
-      OUTER_SET strref = i
-      OUTER_SPRINT text $tra_strings(~%i%~)
-      STRING_SET_EVALUATE strref ~%text%~ IN ~dialogF~
+  // Apply all translations to dialogF.tlk by copying and patching it
+  COPY_EXISTING ~dialogF.tlk~ ~dialogF.tlk~
+    // Apply each translation from the tra file
+    FOR (i = 0; i <= 103213; ++i) BEGIN
+      PATCH_IF VARIABLE_IS_SET $tra_strings(~%i%~) BEGIN
+        SET strref = i
+        SPRINT text $tra_strings(~%i%~)
+        SET_STRING strref ~%text%~
+      END
     END
-  END
+  BUT_ONLY
 
   PRINT @5 // ~Female protagonist translations applied.~
 END
