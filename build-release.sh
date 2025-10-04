@@ -7,7 +7,7 @@ set -e
 MOD_NAME="bg2ee-vanilla-langpack-ja_JP"
 VERSION="v2.6.6.0"
 WEIDU_VERSION="249.00"
-WEIDU_URL="https://github.com/WeiDUorg/weidu/releases/download/v${WEIDU_VERSION}/WeiDU-Windows-amd64.zip"
+WEIDU_URL="https://github.com/WeiDUorg/weidu/releases/download/v${WEIDU_VERSION}/WeiDU-Windows-249-amd64.zip"
 
 # Directory setup
 RELEASE_DIR="release"
@@ -43,7 +43,17 @@ fi
 echo "Downloading WeiDU ${WEIDU_VERSION}..."
 cd "${RELEASE_DIR}"
 curl -L -o weidu.zip "${WEIDU_URL}"
-unzip -q weidu.zip
+
+# Check if unzip is available, otherwise use Python
+if command -v unzip >/dev/null 2>&1; then
+    unzip -q weidu.zip
+elif command -v python3 >/dev/null 2>&1; then
+    echo "Using Python to extract archive..."
+    python3 -c "import zipfile; zipfile.ZipFile('weidu.zip').extractall('.')"
+else
+    echo "ERROR: Neither unzip nor python3 is available. Cannot extract WeiDU archive."
+    exit 1
+fi
 
 # Rename WeiDU executable
 echo "Renaming WeiDU executable..."
@@ -51,6 +61,9 @@ if [ -f "weidu.exe" ]; then
     mv weidu.exe "${MOD_NAME}/setup-${MOD_NAME}.exe"
 elif [ -f "WeiDU.exe" ]; then
     mv WeiDU.exe "${MOD_NAME}/setup-${MOD_NAME}.exe"
+elif [ -f "WeiDU-Windows/weidu.exe" ]; then
+    mv WeiDU-Windows/weidu.exe "${MOD_NAME}/setup-${MOD_NAME}.exe"
+    rm -rf WeiDU-Windows
 else
     echo "WARNING: Could not find weidu.exe in the archive"
 fi
@@ -66,14 +79,28 @@ find . -type d -name "backup" -exec rm -rf {} + 2>/dev/null || true
 cd ..
 
 ARCHIVE_NAME="${MOD_NAME}-${VERSION}.zip"
-zip -r "${ARCHIVE_NAME}" "${MOD_NAME}"
+
+# Use zip if available, otherwise use Python
+if command -v zip >/dev/null 2>&1; then
+    zip -r "${ARCHIVE_NAME}" "${MOD_NAME}"
+elif command -v python3 >/dev/null 2>&1; then
+    echo "Using Python to create archive..."
+    python3 -c "import shutil; shutil.make_archive('${MOD_NAME}-${VERSION}', 'zip', '.', '${MOD_NAME}')"
+else
+    echo "ERROR: Neither zip nor python3 is available. Cannot create release archive."
+    exit 1
+fi
 
 echo ""
 echo "=== Release package created successfully! ==="
 echo "Location: ${RELEASE_DIR}/${ARCHIVE_NAME}"
 echo ""
 echo "Package contents:"
-unzip -l "${ARCHIVE_NAME}" | head -20
+if command -v unzip >/dev/null 2>&1; then
+    unzip -l "${ARCHIVE_NAME}" | head -20
+elif command -v python3 >/dev/null 2>&1; then
+    python3 -c "import zipfile; z = zipfile.ZipFile('${ARCHIVE_NAME}'); print('\n'.join(z.namelist()[:20]))"
+fi
 
 cd ..
 echo ""

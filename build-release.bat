@@ -7,7 +7,7 @@ REM Configuration
 set MOD_NAME=bg2ee-vanilla-langpack-ja_JP
 set VERSION=v2.6.6.0
 set WEIDU_VERSION=249.00
-set WEIDU_URL=https://github.com/WeiDUorg/weidu/releases/download/v%WEIDU_VERSION%/WeiDU-Windows-amd64.zip
+set WEIDU_URL=https://github.com/WeiDUorg/weidu/releases/download/v%WEIDU_VERSION%/WeiDU-Windows-249-amd64.zip
 
 REM Directory setup
 set RELEASE_DIR=release
