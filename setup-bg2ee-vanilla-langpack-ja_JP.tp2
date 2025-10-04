@@ -18,15 +18,33 @@ END
 
 PRINT @1 // ~Installing Japanese translations for dialog.tlk...~
 
-// Apply male protagonist translations (dialog.tra) to dialog.tlk
-STRING_SET_RANGE 0 103213 USING ~v2.6.6.0/lang/ja_JP/dialog.tra~
+// Load male protagonist translations (dialog.tra)
+LOAD_TRA ~v2.6.6.0/lang/ja_JP/dialog.tra~
+
+// Apply all translations to dialog.tlk using STRING_SET with tra references
+// Process in batches to avoid memory issues
+OUTER_FOR (i = 0; i <= 103213; ++i) BEGIN
+  ACTION_IF VARIABLE_IS_SET EVAL ~%i%~ BEGIN
+    STRING_SET_EVALUATE ~%i%~ EVAL ~%%i%%~
+  END
+END
 
 PRINT @2 // ~Male protagonist translations applied.~
 
 // Apply female protagonist translations (dialogF.tra) to dialogF.tlk
 ACTION_IF FILE_EXISTS_IN_GAME ~dialogF.tlk~ BEGIN
   PRINT @3 // ~Installing Japanese translations for dialogF.tlk...~
-  STRING_SET_RANGE 0 103213 USING ~v2.6.6.0/lang/ja_JP/dialogF.tra~ IN ~dialogF~
+
+  // Load female protagonist translations
+  LOAD_TRA ~v2.6.6.0/lang/ja_JP/dialogF.tra~
+
+  // Apply all translations to dialogF.tlk
+  OUTER_FOR (i = 0; i <= 103213; ++i) BEGIN
+    ACTION_IF VARIABLE_IS_SET EVAL ~%i%~ BEGIN
+      STRING_SET_EVALUATE ~%i%~ EVAL ~%%i%%~ IN ~dialogF~
+    END
+  END
+
   PRINT @5 // ~Female protagonist translations applied.~
 END
 
