@@ -44,9 +44,13 @@ echo Downloading WeiDU %WEIDU_VERSION%...
 cd "%RELEASE_DIR%"
 curl -L -o weidu.zip "%WEIDU_URL%"
 
-REM Extract WeiDU
+REM Extract WeiDU using tar (built into Windows 10+)
 echo Extracting WeiDU...
-powershell -command "Expand-Archive -Path weidu.zip -DestinationPath . -Force"
+tar -xf weidu.zip 2>nul
+if errorlevel 1 (
+    REM Fallback to PowerShell if tar fails
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "& {Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory('weidu.zip', '.')}"
+)
 
 REM Rename WeiDU executable
 echo Renaming WeiDU executable...
@@ -54,6 +58,9 @@ if exist "weidu.exe" (
     move weidu.exe "%MOD_NAME%\setup-%MOD_NAME%.exe"
 ) else if exist "WeiDU.exe" (
     move WeiDU.exe "%MOD_NAME%\setup-%MOD_NAME%.exe"
+) else if exist "WeiDU-Windows\weidu.exe" (
+    move "WeiDU-Windows\weidu.exe" "%MOD_NAME%\setup-%MOD_NAME%.exe"
+    rmdir /s /q "WeiDU-Windows"
 ) else (
     echo WARNING: Could not find weidu.exe in the archive
 )
@@ -61,10 +68,16 @@ if exist "weidu.exe" (
 REM Clean up zip file
 del weidu.zip
 
-REM Create final archive
+REM Create final archive using tar (built into Windows 10+)
 echo Creating release archive...
 set ARCHIVE_NAME=%MOD_NAME%-%VERSION%.zip
-powershell -command "Compress-Archive -Path '%MOD_NAME%' -DestinationPath '%ARCHIVE_NAME%' -Force"
+cd "%MOD_NAME%"
+tar -a -cf "..\%ARCHIVE_NAME%" * 2>nul
+cd ..
+if errorlevel 1 (
+    REM Fallback to PowerShell if tar fails
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "& {Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::CreateFromDirectory('%MOD_NAME%', '%ARCHIVE_NAME%')}"
+)
 
 echo.
 echo === Release package created successfully! ===
