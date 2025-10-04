@@ -21,7 +21,6 @@ PRINT @1 // ~dialog.tlk に日本語翻訳を適用しています...（数分�
 // Create lang/ja_JP directory structure if it doesn't exist
 MKDIR ~lang~
 MKDIR ~lang/ja_JP~
-MKDIR ~lang/ja_JP/fonts~
 
 // Generate dialog.tlk from TRA file using WeiDU
 PRINT @7 // ~Generating Japanese dialog.tlk...~
@@ -47,23 +46,16 @@ END
 
 PRINT @5 // ~女性主人公用の翻訳を適用しました。~
 
-// Copy BGWW.LUA to add Japanese language to game settings
-PRINT @15 // ~言語設定ファイルを更新しています...~
+// Copy Japanese font and configuration files to override/
+PRINT @11 // ~日本語フォントと設定ファイルをコピーしています...~
 
-COPY ~v2.6.6.0/BGWW.LUA~ ~BGWW.LUA~
-
-PRINT @16 // ~言語設定ファイルの更新が完了しました。~
-
-// Copy Japanese font files to lang/ja_JP/fonts/
-PRINT @11 // ~日本語フォントをコピーしています...~
-
-ACTION_IF FILE_EXISTS ~v2.6.6.0/fonts/MSGOTHIC.bmp~ AND FILE_EXISTS ~v2.6.6.0/fonts/MSGOTHIC.FNT~ BEGIN
-  COPY ~v2.6.6.0/fonts/MSGOTHIC.bmp~ ~lang/ja_JP/fonts/MSGOTHIC.bmp~
-  COPY ~v2.6.6.0/fonts/MSGOTHIC.FNT~ ~lang/ja_JP/fonts/MSGOTHIC.FNT~
-  PRINT @12 // ~日本語フォントのコピーが完了しました。~
+ACTION_IF FILE_EXISTS ~v2.6.6.0/override/BGEE.LUA~ AND FILE_EXISTS ~v2.6.6.0/override/MEIRYO.ttf~ BEGIN
+  COPY ~v2.6.6.0/override/BGEE.LUA~ ~override/BGEE.LUA~
+  COPY ~v2.6.6.0/override/MEIRYO.ttf~ ~override/MEIRYO.ttf~
+  PRINT @12 // ~日本語フォントと設定ファイルのコピーが完了しました。~
 END ELSE BEGIN
-  PRINT @13 // ~警告: 日本語フォントファイルが見つかりません。~
-  PRINT @14 // ~MSGOTHIC.bmp と MSGOTHIC.FNT を v2.6.6.0/fonts/ に配置してください。~
+  PRINT @13 // ~警告: 日本語フォント/設定ファイルが見つかりません。~
+  PRINT @14 // ~BGEE.LUA と MEIRYO.ttf を v2.6.6.0/override/ に配置してください。~
 END
 
 PRINT @6 // ~日本語翻訳のインストールが完了しました！~
