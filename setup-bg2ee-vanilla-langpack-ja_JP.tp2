@@ -18,9 +18,10 @@ END
 
 PRINT @1 // ~dialog.tlk に日本語翻訳を適用しています...（数分かかります。お待ちください）~
 
-// Create lang/ja_JP directory if it doesn't exist
+// Create lang/ja_JP directory structure if it doesn't exist
 MKDIR ~lang~
 MKDIR ~lang/ja_JP~
+MKDIR ~lang/ja_JP/fonts~
 
 // Generate dialog.tlk from TRA file using WeiDU
 PRINT @7 // ~Generating Japanese dialog.tlk...~
@@ -45,6 +46,18 @@ ACTION_IF NOT FILE_EXISTS ~lang/ja_JP/dialogF.tlk~ BEGIN
 END
 
 PRINT @5 // ~女性主人公用の翻訳を適用しました。~
+
+// Copy Japanese font files to lang/ja_JP/fonts/
+PRINT @11 // ~日本語フォントをコピーしています...~
+
+ACTION_IF FILE_EXISTS ~v2.6.6.0/fonts/MSGOTHIC.bmp~ AND FILE_EXISTS ~v2.6.6.0/fonts/MSGOTHIC.FNT~ BEGIN
+  COPY ~v2.6.6.0/fonts/MSGOTHIC.bmp~ ~lang/ja_JP/fonts/MSGOTHIC.bmp~
+  COPY ~v2.6.6.0/fonts/MSGOTHIC.FNT~ ~lang/ja_JP/fonts/MSGOTHIC.FNT~
+  PRINT @12 // ~日本語フォントのコピーが完了しました。~
+END ELSE BEGIN
+  PRINT @13 // ~警告: 日本語フォントファイルが見つかりません。~
+  PRINT @14 // ~MSGOTHIC.bmp と MSGOTHIC.FNT を v2.6.6.0/fonts/ に配置してください。~
+END
 
 PRINT @6 // ~日本語翻訳のインストールが完了しました！~
 PRINT @10 // ~ゲーム内の設定から言語を「日本語」に変更してください。~
