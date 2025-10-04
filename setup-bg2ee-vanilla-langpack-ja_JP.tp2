@@ -21,11 +21,13 @@ PRINT @1 // ~Installing Japanese translations for dialog.tlk...~
 // Load male protagonist translations (dialog.tra)
 LOAD_TRA ~v2.6.6.0/lang/ja_JP/dialog.tra~
 
-// Apply all translations to dialog.tlk using STRING_SET with tra references
-// Process in batches to avoid memory issues
+// Apply all translations to dialog.tlk using STRING_SET
+// Process each string reference that exists in the tra file
 OUTER_FOR (i = 0; i <= 103213; ++i) BEGIN
-  ACTION_IF VARIABLE_IS_SET EVAL ~%i%~ BEGIN
-    STRING_SET_EVALUATE ~%i%~ EVAL ~%%i%%~
+  ACTION_IF VARIABLE_IS_SET $tra_strings(~%i%~) BEGIN
+    OUTER_SET strref = i
+    OUTER_SPRINT text $tra_strings(~%i%~)
+    STRING_SET_EVALUATE strref ~%text%~
   END
 END
 
@@ -35,13 +37,18 @@ PRINT @2 // ~Male protagonist translations applied.~
 ACTION_IF FILE_EXISTS_IN_GAME ~dialogF.tlk~ BEGIN
   PRINT @3 // ~Installing Japanese translations for dialogF.tlk...~
 
+  // Clear previous tra strings
+  ACTION_CLEAR_ARRAY tra_strings
+
   // Load female protagonist translations
   LOAD_TRA ~v2.6.6.0/lang/ja_JP/dialogF.tra~
 
   // Apply all translations to dialogF.tlk
   OUTER_FOR (i = 0; i <= 103213; ++i) BEGIN
-    ACTION_IF VARIABLE_IS_SET EVAL ~%i%~ BEGIN
-      STRING_SET_EVALUATE ~%i%~ EVAL ~%%i%%~ IN ~dialogF~
+    ACTION_IF VARIABLE_IS_SET $tra_strings(~%i%~) BEGIN
+      OUTER_SET strref = i
+      OUTER_SPRINT text $tra_strings(~%i%~)
+      STRING_SET_EVALUATE strref ~%text%~ IN ~dialogF~
     END
   END
 
