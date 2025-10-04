@@ -21,6 +21,7 @@ PRINT @1 // ~dialog.tlk に日本語翻訳を適用しています...（数分�
 // Create lang/ja_JP directory structure if it doesn't exist
 MKDIR ~lang~
 MKDIR ~lang/ja_JP~
+MKDIR ~lang/ja_JP/fonts~
 
 // Copy pre-generated TLK files
 PRINT @7 // ~Copying Japanese dialog.tlk...~
@@ -43,16 +44,28 @@ END ELSE BEGIN
   FAIL @9 // ~dialogF.tlk not found~
 END
 
-// Copy Japanese font and configuration files to override/
-PRINT @11 // ~日本語フォントと設定ファイルをコピーしています...~
+// Copy Japanese font files to lang/ja_JP/fonts/
+PRINT @11 // ~日本語フォントファイルをコピーしています...~
+
+ACTION_IF FILE_EXISTS ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.bmp~ AND FILE_EXISTS ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.FNT~ BEGIN
+  COPY ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.bmp~ ~lang/ja_JP/fonts/MSGOTHIC.bmp~
+  COPY ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.FNT~ ~lang/ja_JP/fonts/MSGOTHIC.FNT~
+  PRINT @12 // ~日本語フォントファイルのコピーが完了しました。~
+END ELSE BEGIN
+  PRINT @13 // ~警告: 日本語フォントファイルが見つかりません。~
+  PRINT @14 // ~MSGOTHIC.bmp と MSGOTHIC.FNT を v2.6.6.0/lang/ja_JP/fonts/ に配置してください。~
+END
+
+// Copy Japanese configuration files to override/
+PRINT @15 // ~日本語設定ファイルをコピーしています...~
 
 ACTION_IF FILE_EXISTS ~v2.6.6.0/override/BGEE.LUA~ AND FILE_EXISTS ~v2.6.6.0/override/MEIRYO.ttf~ BEGIN
   COPY ~v2.6.6.0/override/BGEE.LUA~ ~override/BGEE.LUA~
   COPY ~v2.6.6.0/override/MEIRYO.ttf~ ~override/MEIRYO.ttf~
-  PRINT @12 // ~日本語フォントと設定ファイルのコピーが完了しました。~
+  PRINT @16 // ~日本語設定ファイルのコピーが完了しました。~
 END ELSE BEGIN
-  PRINT @13 // ~警告: 日本語フォント/設定ファイルが見つかりません。~
-  PRINT @14 // ~BGEE.LUA と MEIRYO.ttf を v2.6.6.0/override/ に配置してください。~
+  PRINT @17 // ~警告: 日本語設定ファイルが見つかりません。~
+  PRINT @18 // ~BGEE.LUA と MEIRYO.ttf を v2.6.6.0/override/ に配置してください。~
 END
 
 PRINT @6 // ~日本語翻訳のインストールが完了しました！~

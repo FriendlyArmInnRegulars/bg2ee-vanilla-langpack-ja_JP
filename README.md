@@ -18,13 +18,19 @@ Baldur's Gate II: Enhanced Edition (BG2:EE) v2.6.6.0 用の日本語言語パッ
 
 **重要**: インストール前に、以下のファイルを準備する必要があります。
 
-以下のファイルを `bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/` ディレクトリに配置してください：
+以下のフォントファイルを `bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/` ディレクトリに配置してください：
+- `MSGOTHIC.bmp` - 日本語ビットマップフォント
+- `MSGOTHIC.FNT` - フォント定義ファイル
+
+以下の設定ファイルを `bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/` ディレクトリに配置してください：
 - `BGEE.LUA` - 日本語表示用の設定ファイル
 - `MEIRYO.ttf` - メイリオフォントファイル
 
 ### ファイルの入手方法
 
-1. 日本語版BG2:EEがある場合: ゲームの `override/` ディレクトリから取得
+1. 日本語版BG2:EEがある場合:
+   - フォントファイル: ゲームの `lang/ja_JP/fonts/` ディレクトリから取得
+   - 設定ファイル: ゲームの `override/` ディレクトリから取得
 2. コミュニティ提供のパックを使用
 
 ※ 著作権の関係でこれらのファイルはリポジトリに含まれていません
@@ -34,6 +40,7 @@ Baldur's Gate II: Enhanced Edition (BG2:EE) v2.6.6.0 用の日本語言語パッ
 1. [Releases](https://github.com/FriendlyArmInnRegulars/bg2ee-vanilla-langpack-ja_JP/releases) から最新版の `bg2ee-vanilla-langpack-ja_JP-v2.6.6.0.zip` をダウンロード
 2. ZIPファイルを展開
 3. **日本語フォントと設定ファイルを準備**（上記「日本語フォントと設定ファイルの準備」参照）
+   - `MSGOTHIC.bmp` と `MSGOTHIC.FNT` を `bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/` に配置
    - `BGEE.LUA` と `MEIRYO.ttf` を `bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/` に配置
 4. `bg2ee-vanilla-langpack-ja_JP` フォルダをBG2:EEのゲームディレクトリ（`chitin.key` があるフォルダ）にコピー
 5. `setup-bg2ee-vanilla-langpack-ja_JP.exe` をゲームディレクトリにコピー
@@ -48,7 +55,7 @@ Baldur's Gate II: Enhanced Edition (BG2:EE) v2.6.6.0 用の日本語言語パッ
 - このMODはBG2:EE v2.6.6.0専用です
 - 他のバージョンでは動作しない可能性があります
 - インストール前にゲームのセーブデータをバックアップすることを推奨します
-- **インストール前に日本語フォントと設定ファイル（BGEE.LUA、MEIRYO.ttf）を準備する必要があります**
+- **インストール前に日本語フォントと設定ファイル（MSGOTHIC.bmp、MSGOTHIC.FNT、BGEE.LUA、MEIRYO.ttf）を準備する必要があります**
 - インストール後、ゲーム内の設定で言語を「日本語」に変更する必要があります
 
 ## ファイル構成
@@ -61,8 +68,11 @@ bg2ee-vanilla-langpack-ja_JP/
 │   │   └── ja_JP/
 │   │       ├── dialog.tra   # 男性主人公用翻訳 (103,214文字列)
 │   │       ├── dialogF.tra  # 女性主人公用翻訳 (103,214文字列)
-│   │       └── setup.tra    # インストールメッセージ
-│   ├── override/            # 日本語フォント・設定ファイル配置場所
+│   │       ├── setup.tra    # インストールメッセージ
+│   │       └── fonts/       # 日本語フォントファイル配置場所
+│   │           ├── MSGOTHIC.bmp  # (ユーザーが配置)
+│   │           └── MSGOTHIC.FNT  # (ユーザーが配置)
+│   ├── override/            # 日本語設定ファイル配置場所
 │   │   ├── BGEE.LUA        # (ユーザーが配置)
 │   │   └── MEIRYO.ttf      # (ユーザーが配置)
 │   └── backup/              # インストール時に自動生成
