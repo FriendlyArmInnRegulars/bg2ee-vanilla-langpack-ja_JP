@@ -1,0 +1,10 @@
+# Build artifacts
+release/
+
+# WeiDU backup directories
+backup/
+**/backup/
+
+# OS files
+.DS_Store
+Thumbs.db

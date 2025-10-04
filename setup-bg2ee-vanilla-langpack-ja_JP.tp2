@@ -1,0 +1,33 @@
+BACKUP ~v2.6.6.0/backup~
+AUTHOR ~FriendlyArmInnRegulars - https://github.com/FriendlyArmInnRegulars/bg2ee-vanilla-langpack-ja_JP~
+
+README ~README.md~
+
+// Japanese language support for BG2:EE v2.6.6.0
+LANGUAGE ~Japanese (日本語)~
+         ~ja_JP~
+         ~v2.6.6.0/lang/ja_JP/setup.tra~
+
+// Main component: Japanese translation
+BEGIN @0 // ~Japanese Translation for BG2:EE v2.6.6.0~
+
+// Verify game version
+ACTION_IF NOT (GAME_IS ~bg2ee~) BEGIN
+  FAIL @4 // ~This mod is designed for Baldur's Gate II: Enhanced Edition only.~
+END
+
+PRINT @1 // ~Installing Japanese translations for dialog.tlk...~
+
+// Apply male protagonist translations (dialog.tra) to dialog.tlk
+STRING_SET_RANGE 0 103213 USING ~v2.6.6.0/lang/ja_JP/dialog.tra~
+
+PRINT @2 // ~Male protagonist translations applied.~
+
+// Apply female protagonist translations (dialogF.tra) to dialogF.tlk
+ACTION_IF FILE_EXISTS_IN_GAME ~dialogF.tlk~ BEGIN
+  PRINT @3 // ~Installing Japanese translations for dialogF.tlk...~
+  STRING_SET_RANGE 0 103213 USING ~v2.6.6.0/lang/ja_JP/dialogF.tra~ IN ~dialogF~
+  PRINT @5 // ~Female protagonist translations applied.~
+END
+
+PRINT @6 // ~Japanese translation installed successfully!~

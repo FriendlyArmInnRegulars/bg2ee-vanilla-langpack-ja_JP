@@ -14,15 +14,33 @@ Baldur's Gate II: Enhanced Edition (BG2:EE) v2.6.6.0 用の日本語言語パッ
 ### 対応バージョン
 - BG2:EE v2.6.6.0
 
+## インストール方法
+
+1. [Releases](https://github.com/FriendlyArmInnRegulars/bg2ee-vanilla-langpack-ja_JP/releases) から最新版の `bg2ee-vanilla-langpack-ja_JP-v2.6.6.0.zip` をダウンロード
+2. ZIPファイルを展開
+3. `bg2ee-vanilla-langpack-ja_JP` フォルダをBG2:EEのゲームディレクトリ（`chitin.key` があるフォルダ）にコピー
+4. `setup-bg2ee-vanilla-langpack-ja_JP.exe` をゲームディレクトリにコピー
+5. `setup-bg2ee-vanilla-langpack-ja_JP.exe` を実行してインストール
+6. インストールが完了したら、ゲームを起動して日本語でプレイできます
+
+### 注意事項
+- このMODはBG2:EE v2.6.6.0専用です
+- 他のバージョンでは動作しない可能性があります
+- インストール前にゲームのセーブデータをバックアップすることを推奨します
+
 ## ファイル構成
 
 ```
-v2.6.6.0/
-├── lang/
-│   └── ja_JP/
-│       ├── dialog.tra   # 男性主人公用翻訳
-│       └── dialogF.tra  # 女性主人公用翻訳
-└── backup/              # インストール時に自動生成
+bg2ee-vanilla-langpack-ja_JP/
+├── setup-bg2ee-vanilla-langpack-ja_JP.tp2  # インストールスクリプト
+├── v2.6.6.0/
+│   ├── lang/
+│   │   └── ja_JP/
+│   │       ├── dialog.tra   # 男性主人公用翻訳 (103,214文字列)
+│   │       ├── dialogF.tra  # 女性主人公用翻訳 (103,214文字列)
+│   │       └── setup.tra    # インストールメッセージ
+│   └── backup/              # インストール時に自動生成
+└── README.md
 ```
 
 ## リリースパッケージの作成

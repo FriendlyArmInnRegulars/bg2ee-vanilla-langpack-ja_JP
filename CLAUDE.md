@@ -55,10 +55,19 @@ Language packs for Enhanced Edition games work by:
 3. Ensuring compatibility with the BG2:EE engine's Unicode support
 
 ### Translation Files
-- **dialog.tra**: Male protagonist dialogue translations (対応するdialog.tlk)
-- **dialogF.tra**: Female protagonist dialogue translations (対応するdialogF.tlk)
+- **dialog.tra**: Male protagonist dialogue translations (対応するdialog.tlk) - 103,214 strings
+- **dialogF.tra**: Female protagonist dialogue translations (対応するdialogF.tlk) - 103,214 strings
+- **setup.tra**: Installation messages in Japanese
 - Both files use WeiDU's TRA format with `@string_reference` syntax
 - Files are typically large (~14MB each) as they contain all game dialogue
+
+### TP2 Implementation
+The `setup-bg2ee-vanilla-langpack-ja_JP.tp2` file:
+- Uses `STRING_SET_RANGE` to apply all translations efficiently
+- Applies dialog.tra to dialog.tlk (strings 0-103213)
+- Applies dialogF.tra to dialogF.tlk if it exists
+- Verifies the game is BG2:EE before installation
+- Provides Japanese installation messages via setup.tra
 
 ## Development Workflow
 
