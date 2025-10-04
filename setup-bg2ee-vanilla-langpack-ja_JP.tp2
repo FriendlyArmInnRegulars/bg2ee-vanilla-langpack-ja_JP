@@ -9,61 +9,42 @@ LANGUAGE ~Japanese (日本語)~
          ~v2.6.6.0/lang/ja_JP/setup.tra~
 
 // Main component: Japanese translation
-BEGIN @0 // ~Japanese Translation for BG2:EE v2.6.6.0~
+BEGIN @0 // ~BG2:EE v2.6.6.0 日本語化パッチ~
 
 // Verify game version
 ACTION_IF NOT (GAME_IS ~bg2ee~) BEGIN
-  FAIL @4 // ~This mod is designed for Baldur's Gate II: Enhanced Edition only.~
+  FAIL @4 // ~このMODはBaldur's Gate II: Enhanced Edition専用です。~
 END
 
-PRINT @1 // ~Installing Japanese translations for dialog.tlk...~
+PRINT @1 // ~dialog.tlk に日本語翻訳を適用しています...（数分かかります。お待ちください）~
 
-// Load male protagonist translations (dialog.tra)
-LOAD_TRA ~v2.6.6.0/lang/ja_JP/dialog.tra~
+// Create lang/ja_JP directory if it doesn't exist
+MKDIR ~lang~
+MKDIR ~lang/ja_JP~
 
-// Apply all translations to dialog.tlk using STRING_SET
-// Process each string reference that exists in the tra file
-// This will take time but is the most reliable method
-OUTER_SET total_strings = 0
-OUTER_FOR (i = 0; i <= 103213; ++i) BEGIN
-  ACTION_IF VARIABLE_IS_SET $tra_strings(~%i%~) BEGIN
-    OUTER_SET strref = i
-    OUTER_SPRINT text $tra_strings(~%i%~)
-    STRING_SET_EVALUATE strref ~%text%~
-    OUTER_SET total_strings += 1
+// Generate dialog.tlk from TRA file using WeiDU
+PRINT @7 // ~Generating Japanese dialog.tlk...~
 
-    // Show progress every 5000 strings
-    ACTION_IF (total_strings > 0) AND ((total_strings MODULO 5000) = 0) BEGIN
-      OUTER_SET percent = (total_strings * 100) / 103214
-      PRINT ~Progress: %total_strings% / 103214 strings (%percent%% complete)~
-    END
-  END
+AT_NOW ~weidu --make-tlk v2.6.6.0/lang/ja_JP/dialog.tra --out lang/ja_JP~
+
+// Check if dialog.tlk was created
+ACTION_IF NOT FILE_EXISTS ~lang/ja_JP/dialog.tlk~ BEGIN
+  FAIL @8 // ~Failed to generate dialog.tlk~
 END
 
-PRINT @2 // ~Male protagonist translations applied.~
+PRINT @2 // ~男性主人公用の翻訳を適用しました。~
 
-// Apply female protagonist translations (dialogF.tra) to dialogF.tlk
-// Since STRING_SET only works with dialog.tlk, we need to use a different approach
-// We will copy dialogF.tlk, modify it, and copy it back
-ACTION_IF FILE_EXISTS_IN_GAME ~dialogF.tlk~ BEGIN
-  PRINT @3 // ~Installing Japanese translations for dialogF.tlk...~
+// Generate dialogF.tlk from TRA file
+PRINT @3 // ~dialogF.tlk に日本語翻訳を適用しています...~
 
-  // Clear previous tra strings
-  ACTION_CLEAR_ARRAY tra_strings
+AT_NOW ~weidu --make-tlk v2.6.6.0/lang/ja_JP/dialogF.tra --out lang/ja_JP --ftlkout dialogF.tlk~
 
-  // Load female protagonist translations
-  LOAD_TRA ~v2.6.6.0/lang/ja_JP/dialogF.tra~
-
-  // Since we cannot directly STRING_SET to dialogF.tlk,
-  // we copy dialog.tlk (which now has male translations) as a template
-  // Then we'll apply female translations by re-processing with a custom approach
-
-  // For now, copy the male version to female version as a workaround
-  // This means both male and female will use the same translations
-  // This is acceptable for Japanese since gender-specific dialogue is minimal
-  COPY_EXISTING ~dialog.tlk~ ~dialogF.tlk~
-
-  PRINT @5 // ~Female protagonist translations applied.~
+// Check if dialogF.tlk was created
+ACTION_IF NOT FILE_EXISTS ~lang/ja_JP/dialogF.tlk~ BEGIN
+  FAIL @9 // ~Failed to generate dialogF.tlk~
 END
 
-PRINT @6 // ~Japanese translation installed successfully!~
+PRINT @5 // ~女性主人公用の翻訳を適用しました。~
+
+PRINT @6 // ~日本語翻訳のインストールが完了しました！~
+PRINT @10 // ~ゲーム内の設定から言語を「日本語」に変更してください。~
