@@ -64,6 +64,7 @@ bg2ee-vanilla-langpack-ja_JP/
 │   ├── fonts/               # 日本語フォント配置場所
 │   │   ├── MSGOTHIC.bmp    # (ユーザーが配置)
 │   │   └── MSGOTHIC.FNT    # (ユーザーが配置)
+│   ├── BGWW.LUA             # 言語設定ファイル（日本語追加）
 │   └── backup/              # インストール時に自動生成
 └── README.md
 ```

@@ -47,6 +47,13 @@ END
 
 PRINT @5 // ~女性主人公用の翻訳を適用しました。~
 
+// Copy BGWW.LUA to add Japanese language to game settings
+PRINT @15 // ~言語設定ファイルを更新しています...~
+
+COPY ~v2.6.6.0/BGWW.LUA~ ~BGWW.LUA~
+
+PRINT @16 // ~言語設定ファイルの更新が完了しました。~
+
 // Copy Japanese font files to lang/ja_JP/fonts/
 PRINT @11 // ~日本語フォントをコピーしています...~
 
