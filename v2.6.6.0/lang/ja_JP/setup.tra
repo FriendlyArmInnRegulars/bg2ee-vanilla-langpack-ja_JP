@@ -13,8 +13,8 @@
 @11 = ~日本語フォントファイルをコピーしています...~
 @12 = ~日本語フォントファイルのコピーが完了しました。~
 @13 = ~警告: 日本語フォントファイルが見つかりません。~
-@14 = ~MSGOTHIC.bmp と MSGOTHIC.FNT を v2.6.6.0/lang/ja_JP/fonts/ に配置してください。~
+@14 = ~MSGOTHIC.bmp と MSGOTHIC.FNT を bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/ に配置してください。~
 @15 = ~日本語設定ファイルをコピーしています...~
 @16 = ~日本語設定ファイルのコピーが完了しました。~
 @17 = ~警告: 日本語設定ファイルが見つかりません。~
-@18 = ~BGEE.LUA と MEIRYO.ttf を v2.6.6.0/override/ に配置してください。~
+@18 = ~BGEE.LUA と MEIRYO.ttf を bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/ に配置してください。~
