@@ -333,7 +333,7 @@ setup-bg2ee-vanilla-langpack-ja_JP.exe --make-tlk src/v2.6.6.0/lang/ja_JP/dialog
 
 ## クレジット
 
-- **翻訳**: BG2:EE日本語版コミュニティ
+- **翻訳**: BG2:EE日本語翻訳コミュニティの皆様
 - **MOD作成**: FriendlyArmInnRegulars
 - **WeiDU**: Westley Weimer & WeiDU Community
 - **ゲーム**: Beamdog / Overhaul Games
@@ -343,3 +343,7 @@ setup-bg2ee-vanilla-langpack-ja_JP.exe --make-tlk src/v2.6.6.0/lang/ja_JP/dialog
 - **GitHubリポジトリ**: https://github.com/FriendlyArmInnRegulars/bg2ee-vanilla-langpack-ja_JP
 - **WeiDU公式サイト**: https://weidu.org/
 - **BG2:EE公式サイト**: https://www.beamdog.com/games/baldurs-gate-2-enhanced/
+- **日本語訳データの共有サイト**
+   - [日本語化ファイル置き場 | uploader.jp](https://ux.getuploader.com/game_gate/)
+   - [BGx:EE 非公式パッチ公開所 | uploader.jp](https://ux.getuploader.com/BGxEE_UnOfficialPatch/)
+   - [BG2_EE翻訳シート_EE - Google スプレッドシート](https://docs.google.com/spreadsheets/d/1uPPxG1kB5tO-TzbO63I3gzuRDHpwwOxd2d3_lOF0LTM/edit?usp=sharing)
