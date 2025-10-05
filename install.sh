@@ -32,19 +32,6 @@ if [ ! -f "../setup-${MOD_NAME}.exe" ]; then
     exit 1
 fi
 
-# Check if lang/ja_JP exists in game directory, if not copy from mod directory
-if [ ! -d "../lang/ja_JP" ]; then
-    echo "Creating lang/ja_JP directory in game directory..."
-    cp -r "${VERSION}/lang/ja_JP" "../lang/"
-    if [ $? -ne 0 ]; then
-        echo "ERROR: Failed to copy lang/ja_JP directory"
-        echo ""
-        exit 1
-    fi
-    echo "lang/ja_JP directory created successfully."
-    echo ""
-fi
-
 # Check if version directory exists
 if [ ! -d "${VERSION}" ]; then
     echo "ERROR: Version directory not found."
@@ -68,19 +55,13 @@ if [ ! -f "${VERSION}/lang/ja_JP/dialogF.tra" ]; then
     exit 1
 fi
 
-# Change to game directory (parent directory)
-echo "Changing to game directory..."
-cd ..
-echo "Current directory: $(pwd)"
-echo ""
-
 echo "Step 1: Generating TLK files from TRA files..."
 echo "This may take several minutes. Please wait..."
 echo ""
 
 # Copy setup-*.exe to mod directory as WeiDU.exe
 echo "Copying WeiDU executable to mod directory..."
-cp "setup-${MOD_NAME}.exe" "${MOD_NAME}/WeiDU.exe"
+cp "../setup-${MOD_NAME}.exe" "WeiDU.exe"
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to copy WeiDU executable"
     echo ""
@@ -88,30 +69,39 @@ if [ $? -ne 0 ]; then
 fi
 
 # Make WeiDU.exe executable (for Wine on Linux/macOS)
-chmod +x "${MOD_NAME}/WeiDU.exe"
+chmod +x "WeiDU.exe"
 
-# Generate dialog.tlk (from game directory root)
+# Generate dialog.tlk (in mod directory)
 echo "Generating dialog.tlk (male protagonist)..."
-wine "${MOD_NAME}/WeiDU.exe" --make-tlk "lang/ja_JP/dialog.tra" --tlkout "lang/ja_JP/dialog.tlk" --use-lang en_US
+wine "WeiDU.exe" --make-tlk "${VERSION}/lang/ja_JP/dialog.tra" --tlkout "${VERSION}/lang/ja_JP/dialog.tlk" --use-lang en_US
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to generate dialog.tlk"
     echo ""
     exit 1
 fi
 
-# Generate dialogF.tlk (from game directory root)
+# Generate dialogF.tlk (in mod directory)
 echo "Generating dialogF.tlk (female protagonist)..."
-wine "${MOD_NAME}/WeiDU.exe" --make-tlk "lang/ja_JP/dialogF.tra" --tlkout "lang/ja_JP/dialogF.tlk" --use-lang en_US
+wine "WeiDU.exe" --make-tlk "${VERSION}/lang/ja_JP/dialogF.tra" --tlkout "${VERSION}/lang/ja_JP/dialogF.tlk" --use-lang en_US
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to generate dialogF.tlk"
     echo ""
     exit 1
 fi
 
+# Clean up WeiDU.exe
+rm -f "WeiDU.exe"
+
 echo ""
 echo "TLK files generated successfully!"
-echo "  - lang/ja_JP/dialog.tlk"
-echo "  - lang/ja_JP/dialogF.tlk"
+echo "  - ${VERSION}/lang/ja_JP/dialog.tlk"
+echo "  - ${VERSION}/lang/ja_JP/dialogF.tlk"
+echo ""
+
+# Change to game directory (parent directory)
+echo "Changing to game directory..."
+cd ..
+echo "Current directory: $(pwd)"
 echo ""
 
 echo "Step 2: Installing the Japanese language pack..."
@@ -125,14 +115,6 @@ read -p "Press Enter to continue..."
 
 # Install the mod
 wine "setup-${MOD_NAME}.exe"
-
-# Clean up temporary TRA files
-echo ""
-echo "Cleaning up temporary files..."
-rm -f "lang/ja_JP/dialog.tra"
-rm -f "lang/ja_JP/dialogF.tra"
-rm -f "lang/ja_JP/setup.tra"
-echo "Cleanup complete."
 
 echo ""
 echo "========================================"

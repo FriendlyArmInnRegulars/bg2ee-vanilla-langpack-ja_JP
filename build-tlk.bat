@@ -24,20 +24,6 @@ if not exist "..\chitin.key" (
     exit /b 1
 )
 
-REM Check if lang\ja_JP exists in game directory, if not copy from mod directory
-if not exist "..\lang\ja_JP" (
-    echo Creating lang\ja_JP directory in game directory...
-    xcopy /E /I /Y "%VERSION%\lang\ja_JP" "..\lang\ja_JP" > nul
-    if errorlevel 1 (
-        echo ERROR: Failed to copy lang\ja_JP directory
-        echo.
-        pause
-        exit /b 1
-    )
-    echo lang\ja_JP directory created successfully.
-    echo.
-)
-
 REM Check if TRA files exist
 if not exist "%VERSION%\lang\ja_JP\dialog.tra" (
     echo ERROR: dialog.tra not found.
@@ -53,15 +39,10 @@ if not exist "%VERSION%\lang\ja_JP\dialogF.tra" (
     exit /b 1
 )
 
-REM Change to game directory
-cd ..
-echo Current directory: %CD%
-echo.
-
 REM Check for setup-*.exe first, otherwise download WeiDU
-if exist "setup-%MOD_NAME%.exe" (
+if exist "..\setup-%MOD_NAME%.exe" (
     echo Using existing setup-%MOD_NAME%.exe...
-    copy /Y "setup-%MOD_NAME%.exe" "%MOD_NAME%\WeiDU.exe" > nul
+    copy /Y "..\setup-%MOD_NAME%.exe" "WeiDU.exe" > nul
 ) else (
     echo Downloading WeiDU %WEIDU_VERSION%...
     curl -L -o weidu-temp.zip "%WEIDU_URL%"
@@ -73,11 +54,11 @@ if exist "setup-%MOD_NAME%.exe" (
     )
 
     if exist "weidu.exe" (
-        move weidu.exe "%MOD_NAME%\WeiDU.exe"
+        echo Found weidu.exe
     ) else if exist "WeiDU.exe" (
-        move WeiDU.exe "%MOD_NAME%\WeiDU.exe"
+        ren WeiDU.exe weidu.exe
     ) else if exist "WeiDU-Windows\weidu.exe" (
-        move "WeiDU-Windows\weidu.exe" "%MOD_NAME%\WeiDU.exe"
+        move "WeiDU-Windows\weidu.exe" weidu.exe
         rmdir /s /q "WeiDU-Windows"
     )
 
@@ -91,7 +72,7 @@ echo.
 
 REM Generate dialog.tlk
 echo Generating dialog.tlk (male protagonist)...
-"%MOD_NAME%\WeiDU.exe" --make-tlk "lang\ja_JP\dialog.tra" --tlkout "lang\ja_JP\dialog.tlk" --use-lang en_US
+WeiDU.exe --make-tlk "%VERSION%\lang\ja_JP\dialog.tra" --tlkout "%VERSION%\lang\ja_JP\dialog.tlk" --use-lang en_US
 if errorlevel 1 (
     echo ERROR: Failed to generate dialog.tlk
     echo.
@@ -101,7 +82,7 @@ if errorlevel 1 (
 
 REM Generate dialogF.tlk
 echo Generating dialogF.tlk (female protagonist)...
-"%MOD_NAME%\WeiDU.exe" --make-tlk "lang\ja_JP\dialogF.tra" --tlkout "lang\ja_JP\dialogF.tlk" --use-lang en_US
+WeiDU.exe --make-tlk "%VERSION%\lang\ja_JP\dialogF.tra" --tlkout "%VERSION%\lang\ja_JP\dialogF.tlk" --use-lang en_US
 if errorlevel 1 (
     echo ERROR: Failed to generate dialogF.tlk
     echo.
@@ -109,12 +90,15 @@ if errorlevel 1 (
     exit /b 1
 )
 
+REM Clean up WeiDU.exe
+del WeiDU.exe
+
 echo.
 echo ========================================
 echo TLK files generated successfully!
 echo ========================================
-echo   - lang\ja_JP\dialog.tlk
-echo   - lang\ja_JP\dialogF.tlk
+echo   - %VERSION%\lang\ja_JP\dialog.tlk
+echo   - %VERSION%\lang\ja_JP\dialogF.tlk
 echo.
 echo You can now run setup-%MOD_NAME%.exe to install the mod.
 echo.

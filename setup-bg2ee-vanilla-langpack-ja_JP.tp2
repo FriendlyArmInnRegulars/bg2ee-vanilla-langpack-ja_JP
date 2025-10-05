@@ -23,20 +23,22 @@ MKDIR ~lang~
 MKDIR ~lang/ja_JP~
 MKDIR ~lang/ja_JP/fonts~
 
-// Verify TLK files exist
+// Copy TLK files from mod directory to game directory
 PRINT @7 // ~Copying Japanese dialog.tlk...~
 
-// Verify dialog.tlk for male protagonist exists
-ACTION_IF FILE_EXISTS ~lang/ja_JP/dialog.tlk~ BEGIN
+// Copy dialog.tlk for male protagonist
+ACTION_IF FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialog.tlk~ BEGIN
+  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialog.tlk~ ~lang/ja_JP/dialog.tlk~
   PRINT @2 // ~男性主人公用の翻訳を適用しました。~
 END ELSE BEGIN
   FAIL @8 // ~dialog.tlk not found. Please run install.bat or build-tlk.bat first.~
 END
 
-// Verify dialogF.tlk for female protagonist exists
+// Copy dialogF.tlk for female protagonist
 PRINT @3 // ~Copying dialogF.tlk...~
 
-ACTION_IF FILE_EXISTS ~lang/ja_JP/dialogF.tlk~ BEGIN
+ACTION_IF FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialogF.tlk~ BEGIN
+  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialogF.tlk~ ~lang/ja_JP/dialogF.tlk~
   PRINT @5 // ~女性主人公用の翻訳を適用しました。~
 END ELSE BEGIN
   FAIL @9 // ~dialogF.tlk not found. Please run install.bat or build-tlk.bat first.~
