@@ -1,12 +1,12 @@
-BACKUP ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/backup~
+BACKUP ~v2.6.6.0/backup~
 AUTHOR ~FriendlyArmInnRegulars - https://github.com/FriendlyArmInnRegulars/bg2ee-vanilla-langpack-ja_JP~
 
-README ~bg2ee-vanilla-langpack-ja_JP/README.md~
+README ~README.md~
 
 // Japanese language support for BG2:EE v2.6.6.0
 LANGUAGE ~Japanese (日本語)~
          ~ja_JP~
-         ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/setup.tra~
+         ~v2.6.6.0/lang/ja_JP/setup.tra~
 
 // Main component: Japanese translation
 BEGIN @0 // ~BG2:EE v2.6.6.0 日本語化パッチ~
@@ -23,49 +23,47 @@ MKDIR ~lang~
 MKDIR ~lang/ja_JP~
 MKDIR ~lang/ja_JP/fonts~
 
-// Copy pre-generated TLK files
+// Verify TLK files exist
 PRINT @7 // ~Copying Japanese dialog.tlk...~
 
-// Copy pre-generated dialog.tlk for male protagonist
-ACTION_IF FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialog.tlk~ BEGIN
-  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialog.tlk~ ~lang/ja_JP/dialog.tlk~
+// Verify dialog.tlk for male protagonist exists
+ACTION_IF FILE_EXISTS ~lang/ja_JP/dialog.tlk~ BEGIN
   PRINT @2 // ~男性主人公用の翻訳を適用しました。~
 END ELSE BEGIN
-  FAIL @8 // ~dialog.tlk not found~
+  FAIL @8 // ~dialog.tlk not found. Please run install.bat or build-tlk.bat first.~
 END
 
-// Copy pre-generated dialogF.tlk for female protagonist
+// Verify dialogF.tlk for female protagonist exists
 PRINT @3 // ~Copying dialogF.tlk...~
 
-ACTION_IF FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialogF.tlk~ BEGIN
-  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/dialogF.tlk~ ~lang/ja_JP/dialogF.tlk~
+ACTION_IF FILE_EXISTS ~lang/ja_JP/dialogF.tlk~ BEGIN
   PRINT @5 // ~女性主人公用の翻訳を適用しました。~
 END ELSE BEGIN
-  FAIL @9 // ~dialogF.tlk not found~
+  FAIL @9 // ~dialogF.tlk not found. Please run install.bat or build-tlk.bat first.~
 END
 
 // Copy Japanese font files to lang/ja_JP/fonts/
 PRINT @11 // ~日本語フォントファイルをコピーしています...~
 
-ACTION_IF FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.bmp~ AND FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.FNT~ BEGIN
-  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.bmp~ ~lang/ja_JP/fonts/MSGOTHIC.bmp~
-  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.FNT~ ~lang/ja_JP/fonts/MSGOTHIC.FNT~
+ACTION_IF FILE_EXISTS ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.bmp~ AND FILE_EXISTS ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.FNT~ BEGIN
+  COPY ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.bmp~ ~lang/ja_JP/fonts/MSGOTHIC.bmp~
+  COPY ~v2.6.6.0/lang/ja_JP/fonts/MSGOTHIC.FNT~ ~lang/ja_JP/fonts/MSGOTHIC.FNT~
   PRINT @12 // ~日本語フォントファイルのコピーが完了しました。~
 END ELSE BEGIN
   PRINT @13 // ~警告: 日本語フォントファイルが見つかりません。~
-  PRINT @14 // ~MSGOTHIC.bmp と MSGOTHIC.FNT を bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/lang/ja_JP/fonts/ に配置してください。~
+  PRINT @14 // ~MSGOTHIC.bmp と MSGOTHIC.FNT を v2.6.6.0/lang/ja_JP/fonts/ に配置してください。~
 END
 
 // Copy Japanese configuration files to override/
 PRINT @15 // ~日本語設定ファイルをコピーしています...~
 
-ACTION_IF FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/BGEE.LUA~ AND FILE_EXISTS ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/MEIRYO.ttf~ BEGIN
-  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/BGEE.LUA~ ~override/BGEE.LUA~
-  COPY ~bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/MEIRYO.ttf~ ~override/MEIRYO.ttf~
+ACTION_IF FILE_EXISTS ~v2.6.6.0/override/BGEE.LUA~ AND FILE_EXISTS ~v2.6.6.0/override/MEIRYO.ttf~ BEGIN
+  COPY ~v2.6.6.0/override/BGEE.LUA~ ~override/BGEE.LUA~
+  COPY ~v2.6.6.0/override/MEIRYO.ttf~ ~override/MEIRYO.ttf~
   PRINT @16 // ~日本語設定ファイルのコピーが完了しました。~
 END ELSE BEGIN
   PRINT @17 // ~警告: 日本語設定ファイルが見つかりません。~
-  PRINT @18 // ~BGEE.LUA と MEIRYO.ttf を bg2ee-vanilla-langpack-ja_JP/v2.6.6.0/override/ に配置してください。~
+  PRINT @18 // ~BGEE.LUA と MEIRYO.ttf を v2.6.6.0/override/ に配置してください。~
 END
 
 PRINT @6 // ~日本語翻訳のインストールが完了しました！~
